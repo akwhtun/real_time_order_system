@@ -3,12 +3,39 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  phone  String
+  orders Order[]
+}
+
+model FoodItem {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  orderCode  String
+  name       String
+  price      Float
+  imageName  String
+  quantity   Int
+  totalPrice Float
+}
+
+model Order {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String   @db.ObjectId
+  orderCode       String
+  waitingTime     Int
+  totalFinalPrice Float
+  status          String   @default("Pending") // Pending, Preparing, Ready, Delivered
+  createdAt       DateTime @default(now())
 }
