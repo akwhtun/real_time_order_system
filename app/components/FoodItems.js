@@ -2,43 +2,95 @@
 
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const FoodItems = () => {
+    const [cartItems, setCartItems] = useState([])
+
     const foodItems = [
         {
             id: 1,
             name: "Margherita Pizza",
             description: "Classic cheese pizza with a crispy crust and tomato sauce.",
-            price: "$9.99",
+            price: "9.99",
             image: "https://via.placeholder.com/300x200?text=Pizza",
         },
         {
             id: 2,
             name: "Caesar Salad",
             description: "Fresh lettuce, Parmesan cheese, croutons, and Caesar dressing.",
-            price: "$7.49",
+            price: "7.49",
             image: "https://via.placeholder.com/300x200?text=Salad",
         },
         {
             id: 3,
             name: "Spaghetti Bolognese",
             description: "Italian pasta served with a rich meat sauce.",
-            price: "$12.99",
+            price: "12.99",
             image: "https://via.placeholder.com/300x200?text=Pasta",
         },
         {
             id: 4,
             name: "Chocolate Cake",
             description: "Decadent chocolate cake topped with creamy chocolate frosting.",
-            price: "$5.99",
+            price: "5.99",
             image: "https://via.placeholder.com/300x200?text=Cake",
         },
     ];
 
+    const updateCartItems = () => {
+        const localItem = JSON.parse(localStorage.getItem("food-in-cart")) || [];
+        setCartItems(localItem);
+    };
+
+    useEffect(() => {
+        updateCartItems();
+
+        const handleStorageChange = () => {
+            updateCartItems();
+        };
+
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleCustomEvent = () => {
+            updateCartItems();
+        };
+
+        window.addEventListener("cartUpdate", handleCustomEvent);
+
+        return () => {
+            window.removeEventListener("cartUpdate", handleCustomEvent);
+        };
+    }, []);
+
+
+    const handleAddItem = (food) => {
+        const existingItem = cartItems.find(item => item.id === food.id);
+        let updatedCart;
+        if (existingItem) {
+            updatedCart = cartItems.map(item => item.id === food.id ? { ...item, count: existingItem.count + 1 } : item)
+        } else {
+            updatedCart = [...cartItems, { ...food, count: 1 }]
+        }
+
+        localStorage.setItem("food-in-cart", JSON.stringify(updatedCart))
+        setCartItems(updatedCart)
+        const event = new Event("cartUpdate");
+        window.dispatchEvent(event);
+    };
+
+
     return (
-        <div className="container mx-auto p-6 ">
+        <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold text-center mb-8">Our Delicious Menu</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {foodItems.map((item) => (
                     <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
                         <img
@@ -49,12 +101,17 @@ const FoodItems = () => {
                         <CardContent className="p-4">
                             <CardTitle className="text-lg font-bold">{item.name}</CardTitle>
                             <CardDescription className="text-sm text-gray-600 mb-2">
-                                {item.description}
+                                {item.description.slice(0, 40)}...
                             </CardDescription>
                             <div className="flex items-center justify-between mt-4">
                                 <span className="text-lg font-bold text-green-600">{item.price}</span>
-                                <Button>Add to Cart</Button>
+                                <Button onClick={() => handleAddItem(item)}>Add to Cart</Button>
                             </div>
+                            <Link href="/">
+                                <button className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                                    More Details
+                                </button>
+                            </Link>
                         </CardContent>
                     </Card>
                 ))}
