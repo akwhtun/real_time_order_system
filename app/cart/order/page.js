@@ -37,13 +37,13 @@ const FoodOrderConfirmPage = () => {
             console.log(data.message);
 
             localStorage.removeItem("food-in-cart");
-            localStorage.removeItem("user-data");
+            // localStorage.removeItem("user-data");
 
             // const event = new Event("cartUpdate");
             // window.dispatchEvent(event);
 
         } else {
-            const errorData = await res.json();
+            const errorData = res
             setError(errorData.error)
         }
     };
