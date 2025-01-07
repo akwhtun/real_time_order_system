@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 export default function ShoppingCart() {
     const [cartItems, setCartItems] = useState([]);
 
@@ -14,7 +15,7 @@ export default function ShoppingCart() {
 
     const increaseQuantity = (id) => {
         updatedCart = cartItems.map((item) =>
-            item.id === id ? { ...item, count: item.count + 1 } : item
+            item.id === id ? { ...item, count: item.count < 5 ? item.count + 1 : item.count } : item
         )
 
         setCartItems(updatedCart)
@@ -48,6 +49,13 @@ export default function ShoppingCart() {
         (total, item) => total + item.price * item.count,
         0
     );
+
+    const clearCart = () => {
+        localStorage.removeItem("food-in-cart")
+        setCartItems([])
+        const event = new Event("cartUpdate");
+        window.dispatchEvent(event);
+    }
 
     return (
         <div className="container mx-auto p-4">
@@ -102,11 +110,18 @@ export default function ShoppingCart() {
             )}
 
             {cartItems.length > 0 && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-lg text-right">
-                    <h2 className="text-xl font-bold">Total Cost: ${totalCost}</h2>
-                    <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
-                        Proceed to Checkout
-                    </button>
+                <div className="flex justify-between items-center">
+                    <Button onClick={clearCart} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                        Clear Cart
+                    </Button>
+                    <div className="mt-6 p-4 bg-gray-100 rounded-lg text-right">
+                        <h2 className="text-xl font-bold">Total Cost: ${totalCost}</h2>
+                        <Link href={"/cart/user"} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+                            Proceed to Checkout
+                        </Link>
+                    </div>
+
+
                 </div>
             )}
         </div>

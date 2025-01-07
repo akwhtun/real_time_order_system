@@ -6,12 +6,17 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ['100', '400', '900'], // Use exact weights you need
+  display: 'swap',
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ['100', '400', '900'], // Use exact weights you need
+  display: 'swap',
 });
+
 
 export const metadata = {
   title: "Food Order App",

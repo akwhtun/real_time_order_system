@@ -49,7 +49,7 @@ export default function Header() {
                 <div className="flex gap-4 mt-2">
                     <nav className="flex flex-wrap space-x-4 me-4 sm:mt-0">
                         <Button asChild>
-                            <Link href="/menu">
+                            <Link href="/cart">
                                 <div className="relative inline-block">
                                     <FaShoppingCart className="text-2xl text-gray-700 hover:text-violet-600 cursor-pointer" />
 

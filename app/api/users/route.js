@@ -16,18 +16,16 @@ export async function POST(req) {
             );
         }
 
-        // Create a new user in MongoDB
         const newUser = await prisma.user.create({
             data: { name, phone },
         });
 
-        // if (newUser) {
-        //     localStorage.setItem("user", JSON.stringify(newUser));
-        // }
-        return NextResponse.json(
-            { message: "User created successfully", user: newUser },
-            { status: 201 }
-        );
+        if (newUser) {
+            return NextResponse.json(
+                { message: "User created successfully", user: newUser },
+                { status: 201 }
+            );
+        }
     } catch (error) {
         console.error("Error creating user:", error);
         return NextResponse.json(

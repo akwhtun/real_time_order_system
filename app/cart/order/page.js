@@ -5,6 +5,8 @@ import OrderSummary from "./OrderSummary";
 import { Button } from "@/components/ui/button";
 import { postOrderData } from "@/app/libs/fetcher";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 const FoodOrderConfirmPage = () => {
     const [userData, setUserData] = useState(null);
     const [cartItems, setCartItems] = useState([]);
@@ -12,9 +14,15 @@ const FoodOrderConfirmPage = () => {
     const [confirmOrder, setConfirmOrder] = useState(false);
     const [error, setError] = useState();
 
+    const router = useRouter()
+
     useEffect(() => {
         // Load user data from localStorage
         const storedUserData = JSON.parse(localStorage.getItem("user-data"));
+        if (!storedUserData) {
+            router.push("/cart/user")
+            return
+        }
         setUserData(storedUserData);
 
         // Load cart items from localStorage
@@ -29,27 +37,30 @@ const FoodOrderConfirmPage = () => {
 
     const handleConfirmOrder = async () => {
         // alert("Order confirmed! Thank you for your purchase.");
-        const res = await postOrderData(cartItems, userData)
+        try {
+            const data = await postOrderData(cartItems, userData)
+            if (data.error) {
+                setError(data.error);
+            } else {
+                localStorage.removeItem("food-in-cart");
 
+                const event = new Event("cartUpdate");
+                window.dispatchEvent(event);
 
-        if (res.ok) {
-            const data = await res.json()
-            console.log(data.message);
-
-            localStorage.removeItem("food-in-cart");
-            // localStorage.removeItem("user-data");
-
-            // const event = new Event("cartUpdate");
-            // window.dispatchEvent(event);
-
-        } else {
-            const errorData = res
-            setError(errorData.error)
+                router.push("/cart/orderSuccess")
+            }
+        } catch (err) {
+            setError(err.message || "An unknown error occurred.");
         }
     };
 
+    const handleRenameInfo = () => {
+        localStorage.removeItem("user-data");
+        router.push("/cart/user")
+    }
+
     return (
-        <div className="container mx-auto p-6">
+        <div className="h-[550px] overflow-scroll mx-auto p-6  container">
             <h1 className="text-3xl font-bold text-center mb-8">Order Confirmation</h1>
             {error && (
                 <p className="text-red-500 text-sm mt-1">{error}</p>
@@ -61,7 +72,17 @@ const FoodOrderConfirmPage = () => {
                         <p><strong>Name:</strong> {userData.name}</p>
                         <p><strong>Phone:</strong> {userData.phone}</p>
                     </div>
+
+                    {/* Rename Info Button */}
+                    <button
+                        onClick={handleRenameInfo}
+
+                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition-transform transform hover:scale-105 focus:outline-none"
+                    >
+                        Rename Info
+                    </button>
                 </div>
+
             )}
 
             {cartItems.length > 0 && (
@@ -79,7 +100,7 @@ const FoodOrderConfirmPage = () => {
             </div>
 
             <div className="flex justify-between mt-6">
-                <Button variant="outlined" onClick={() => alert("Going back to menu.")}>Back to Menu</Button>
+                <Link href={"/"} variant="outlined" >Back to Menu</Link>
                 <Button
                     onClick={handleConfirmOrder}
                     disabled={!confirmOrder}

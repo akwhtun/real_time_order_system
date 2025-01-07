@@ -17,7 +17,6 @@ const order_code = process.env.ORDER_CODE
 
 export async function POST(req) {
     const { foodItems, userData } = await req.json();
-    // console.log("data are ", foodItems, userData);
     const userId = userData.id;
     let data = [];
     let totalFinalPrice = 0;

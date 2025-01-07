@@ -13,6 +13,10 @@ const UserInfo = () => {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user-data"));
+        const foodItems = JSON.parse(localStorage.getItem("food-in-cart"))
+        if (!foodItems) {
+            router.push("/")
+        }
         if (user) {
             router.push("/cart/order")
         }
@@ -27,7 +31,8 @@ const UserInfo = () => {
             isValid = false;
         }
 
-        const phoneRegex = /^[0-9]{10,15}$/; // Validates phone numbers with 10-15 digits
+        const phoneRegex = /^09[84769]\d{8}$/;
+
         if (!userData.phone.trim()) {
             errors.phone = "Phone number is required.";
             isValid = false;
@@ -45,13 +50,12 @@ const UserInfo = () => {
         const validate = validateForm();
         if (validate) {
             try {
-                const res = await postUserData(userData);
-                if (res.ok) {
-                    const data = await res.json();
-                    localStorage.setItem("user-data", JSON.stringify(data.user));
+                const data = await postUserData(userData);
+                if (data.error) {
+                    setAddError(data.error);
                 } else {
-                    const errorData = await res.json();
-                    setAddError(errorData.error || "Failed to add user.");
+                    localStorage.setItem("user-data", JSON.stringify(data.user));
+                    router.push("/cart/order")
                 }
             } catch (error) {
                 setAddError(error.message || "An unknown error occurred.");
@@ -66,7 +70,7 @@ const UserInfo = () => {
             {addError && (
                 <p className="text-red-500 text-sm mt-1">{addError}</p>
             )}
-            <h1 className="text-3xl font-bold text-center mb-8">User Information</h1>
+            <h1 className="text-3xl font-bold text-center mb-8">Your Information</h1>
             <form
                 onSubmit={handleSubmit}
                 className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6 space-y-4"
@@ -100,7 +104,7 @@ const UserInfo = () => {
                         onChange={(e) =>
                             setUserData({ ...userData, phone: e.target.value })
                         }
-                        placeholder="Enter your phone number"
+                        placeholder="09XXXXXXXXX "
                     />
                     {error.phone && (
                         <p className="text-red-500 text-sm mt-1">{error.phone}</p>
@@ -111,7 +115,7 @@ const UserInfo = () => {
                     type="submit"
                     className="w-full bg-violet-600 text-white py-2 px-4 rounded-lg hover:bg-violet-700 transition-colors"
                 >
-                    Proceed to Menu
+                    Proceed to Order
                 </Button>
             </form>
         </div>
