@@ -1,13 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { postUserData } from "@/app/libs/fetcher";
 
 const UserInfo = () => {
     const [userData, setUserData] = useState({ name: "", phone: "" });
     const [error, setError] = useState({});
+    const [addError, setAddError] = useState([])
     const router = useRouter();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user-data"));
+        if (user) {
+            router.push("/cart/order")
+        }
+    }, [])
 
     const validateForm = () => {
         let isValid = true;
@@ -31,20 +40,32 @@ const UserInfo = () => {
         return isValid;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (validateForm()) {
-            // Store user data in localStorage
-            localStorage.setItem("user-data", JSON.stringify(userData));
-
-            // Redirect to the food menu page
-            router.push("/menu");
+        const validate = validateForm();
+        if (validate) {
+            try {
+                const res = await postUserData(userData);
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem("user-data", JSON.stringify(data.user));
+                } else {
+                    const errorData = await res.json();
+                    setAddError(errorData.error || "Failed to add user.");
+                }
+            } catch (error) {
+                setAddError(error.message || "An unknown error occurred.");
+            }
         }
+
+
     };
 
     return (
         <div className="container mx-auto p-6">
+            {addError && (
+                <p className="text-red-500 text-sm mt-1">{addError}</p>
+            )}
             <h1 className="text-3xl font-bold text-center mb-8">User Information</h1>
             <form
                 onSubmit={handleSubmit}
