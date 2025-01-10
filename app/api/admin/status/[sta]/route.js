@@ -6,7 +6,6 @@ export async function GET(req, { params }) {
 
     try {
         const { sta } = params
-        console.log("sattus is ******", sta);
 
 
         if (!sta) {

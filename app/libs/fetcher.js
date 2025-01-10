@@ -74,6 +74,7 @@ export async function fetchOrderItem(orderCode) {
         const res = await fetch(`${BASE_URL}/api/orders/items/${orderCode}`, {
             method: "GET"
         })
+
         if (!res.ok) {
             const errorData = await res.json()
             throw new Error(errorData.error || "Failed to fetch order history");

@@ -1,8 +1,6 @@
-import React from 'react';
 import { fetchOrderItem } from "@/app/libs/fetcher";
 import SaveImage from "./Image";
 const OrderSummary = async ({ searchParams }) => {
-
 
     let orderCode = searchParams.orderCode
     let totalPrice = searchParams.totalPrice

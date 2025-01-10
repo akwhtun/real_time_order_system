@@ -29,7 +29,7 @@ export async function GET(req, { params }) {
         } else {
             return NextResponse.json(
                 { message: "No order history found for this user", history: [] },
-                { status: 404 }
+                { status: 200 }
             );
         }
     } catch (error) {

@@ -3,8 +3,10 @@ import React, { useRef } from 'react';
 
 import html2canvas from "html2canvas";
 const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
-    let orderCode = "akwh709237"
+
     const printRef = useRef();
+
+    const orderCode = orderItems && orderItems[0].orderCode
 
     const handleSaveAsImage = async () => {
         if (!printRef.current) return;
@@ -14,11 +16,17 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
         // Create a link element to download the image
         const link = document.createElement("a");
         link.href = dataURL;
-        link.download = `Order_${orderItems.orderCode}.png`;
+        link.download = `Order_${orderCode}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     };
+
+
+    console.log("f", orderItems);
+
+
+
     return (
         <>
             <div

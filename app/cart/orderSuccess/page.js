@@ -1,19 +1,24 @@
-'use client';
-
+"use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+
 const OrderSuccessful = () => {
     const [showConfetti, setShowConfetti] = useState(false);
-    const userData = JSON.parse(localStorage.getItem("user-data"))
+    // const [userData, setUserData] = useState(null);
+
     useEffect(() => {
+        // const storedUserData = localStorage.getItem("user-data");
+        // if (storedUserData) {
+        //     setUserData(JSON.parse(storedUserData));
+        // }
 
-
-        // Trigger the confetti animation
         const timer = setTimeout(() => {
             setShowConfetti(true);
-        }, 500); // Delay for a cool effect
+        }, 500);
+
         return () => clearTimeout(timer);
     }, []);
+
 
     return (
         <div className="flex flex-col justify-center items-center w-full h-full bg-gradient-to-br from-violet-500 to-indigo-600 text-white">
@@ -43,8 +48,6 @@ const OrderSuccessful = () => {
                     </svg>
                 </div>
 
-
-
                 {/* Success Message */}
                 <h1 className="text-3xl font-bold animate-fade-in">
                     Order Placed Successfully!
@@ -54,7 +57,8 @@ const OrderSuccessful = () => {
                 </p>
 
                 {/* Redirect Button */}
-                <Link href={`/cart/history?id=${userData.id}`}
+                <Link
+                    href={`/cart/history`}
                     className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-110 focus:outline-none animate-slide-in"
                 >
                     View Order History
