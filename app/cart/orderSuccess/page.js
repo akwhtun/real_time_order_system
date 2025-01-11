@@ -21,7 +21,7 @@ const OrderSuccessful = () => {
 
 
     return (
-        <div className="flex flex-col justify-center items-center w-full h-full bg-gradient-to-br from-violet-500 to-indigo-600 text-white">
+        <div className="flex flex-col justify-center items-center w-full h-full bg-gradient-to-br main-bg main-text md:p-0 p-2">
             {/* Confetti Animation */}
             {showConfetti && (
                 <div className="absolute inset-0 overflow-hidden">
@@ -33,7 +33,7 @@ const OrderSuccessful = () => {
                 {/* Success Icon */}
                 <div className="p-6 bg-white rounded-full shadow-lg flex items-center justify-center w-24 h-24">
                     <svg
-                        className="w-16 h-16 text-violet-600 animate-bounce"
+                        className="w-16 h-16 text-gray-600 animate-bounce"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 16 33"
@@ -49,17 +49,17 @@ const OrderSuccessful = () => {
                 </div>
 
                 {/* Success Message */}
-                <h1 className="text-3xl font-bold animate-fade-in">
+                <h1 className="text-3xl  font-bold animate-fade-in">
                     Order Placed Successfully!
                 </h1>
-                <p className="text-lg text-gray-200 animate-fade-in">
+                <p className="text-lg  animate-fade-in">
                     Thank you for your order. Your delicious items will get soon!
                 </p>
 
                 {/* Redirect Button */}
                 <Link
                     href={`/cart/history`}
-                    className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-transform transform hover:scale-110 focus:outline-none animate-slide-in"
+                    className="main-bg2 border-3 border-gray-900 text-gray-900 px-6 py-3 rounded-full shadow-lg hover:bg-gray-500 transition-transform transform hover:scale-110 focus:outline-none animate-slide-in"
                 >
                     View Order History
                 </Link>

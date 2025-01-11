@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "../libs/fetcher";
 export default function AdminLoginPage() {
@@ -13,6 +13,7 @@ export default function AdminLoginPage() {
     });
 
     const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const router = useRouter()
 
@@ -23,21 +24,68 @@ export default function AdminLoginPage() {
 
     console.log(formData);
 
+    useEffect(() => {
+        const admin = JSON.parse(localStorage.getItem("admin-data"));
+        if (admin) {
+            router.push("/admin/dashboard")
+        }
+    }, [])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isAdmin = await login(formData);
+        try {
+            setLoading(true)
+            const isAdmin = await login(formData);
 
-        if (isAdmin) {
-            localStorage.setItem("admin-data", JSON.stringify(formData))
-            router.push("/admin/dashboard")
-        } else {
-            setError("Invalid Credential")
+            if (isAdmin) {
+                localStorage.setItem("admin-data", JSON.stringify(formData))
+                router.push("/admin/dashboard")
+            } else {
+                setError("Invalid Credential")
+            }
+        } catch (err) {
+            setError(err)
+        } finally {
+            setLoading(false)
         }
     };
 
+    if (loading) {
+        return (<div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+            <div className="flex flex-col items-center space-y-6">
+                {/* SVG Loader */}
+                <svg
+                    className="h-16 w-16 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="white"
+                        strokeWidth="4"
+                    />
+                    <path
+                        className="opacity-75"
+                        fill="white"
+                        d="M12 2a10 10 0 0110 10H12z"
+                    />
+                </svg>
+                {/* Text */}
+                <h1 className="text-2xl font-semibold text-white animate-pulse">
+                    Loading, please wait...
+                </h1>
+            </div>
+        </div>)
+    }
+
+
     return (
-        <div className="flex flex-col h-full items-center justify-center bg-gradient-to-br from-violet-500 to-indigo-500">
+        <div className="flex flex-col h-full items-center justify-center bg-gradient-to-br main-bg2 main-text2">
             {error && (
                 <p className="text-red-500 text-lg mb-2">{error}</p>
             )}
@@ -86,7 +134,7 @@ export default function AdminLoginPage() {
                             required
                         />
                     </div>
-                    <Button type="submit" className="w-full bg-violet-500 hover:bg-violet-600">
+                    <Button type="submit" className="w-full main-bg main-text">
                         Login
                     </Button>
                 </form>

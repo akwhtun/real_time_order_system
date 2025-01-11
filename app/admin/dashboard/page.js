@@ -152,9 +152,10 @@ export default function AdminDashboard() {
                         {filteredOrders.map((order) => (
                             <TableRow key={order.id}>
                                 <TableCell>{order.orderCode}</TableCell>
-                                <TableCell>{order.user.name}, {order.user.phone}</TableCell>
-                                <TableCell>{order.waitingTime}, {order.totalFinalPrice}</TableCell>
-                                <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                                <TableCell className="text-base">{order.user.name},<br /> {order.user.phone}</TableCell>
+                                <TableCell> {order.totalFinalPrice}MMK <br /> {order.waitingTime} mins</TableCell>
+                                <TableCell>{new Date(order.createdAt).toLocaleTimeString('en-US', { hour12: true })}
+                                </TableCell>
                                 <TableCell>
                                     <Button asChild>
                                         <Link href={`/admin/checkItem/${order.id}?orderCode=${order.orderCode}&userName=${order.user.name}&phone=${order.user.phone}&waitingTime=${order.waitingTime}&totalPrice=${order.totalFinalPrice}&status=${order.status}`}>Check Food</Link>

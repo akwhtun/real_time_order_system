@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import OrderSummary from "./OrderSummary";
 import { Button } from "@/components/ui/button";
 import { postOrderData } from "@/app/libs/fetcher";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 const FoodOrderConfirmPage = () => {
@@ -60,7 +59,7 @@ const FoodOrderConfirmPage = () => {
     }
 
     return (
-        <div className="h-[550px] overflow-scroll mx-auto p-6  container">
+        <div className="h-[520px] overflow-scroll mx-auto p-6  container">
             <h1 className="text-3xl font-bold text-center mb-8">Order Confirmation</h1>
             {error && (
                 <p className="text-red-500 text-sm mt-1">{error}</p>
@@ -77,7 +76,7 @@ const FoodOrderConfirmPage = () => {
                     <button
                         onClick={handleRenameInfo}
 
-                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition-transform transform hover:scale-105 focus:outline-none"
+                        className="mt-4 px-4 py-2 main-text2 main-bg2 border-2 border-gray-700 rounded-md shadow  transition-transform transform hover:scale-105 focus:outline-none"
                     >
                         Rename Info
                     </button>
@@ -95,16 +94,18 @@ const FoodOrderConfirmPage = () => {
             <div className="mb-6">
                 <h2 className="text-xl font-semibold">Total Cost</h2>
                 <div className="bg-white p-4 border rounded-md shadow-md">
-                    <p className="text-lg font-bold">Total:   {totalCost}</p>
+                    <p className="text-lg font-bold">Total:   {totalCost} MMK</p>
                 </div>
             </div>
 
             <div className="flex justify-between mt-6">
-                <Link href={"/"} variant="outlined" >Back to Menu</Link>
+                <Button asChild>
+                    <Link href={"/"} variant="outlined" className="main-bg2 main-text2 border-2 border-gray-700 hover:text-white" >Back to Menu</Link>
+                </Button>
                 <Button
                     onClick={handleConfirmOrder}
                     disabled={!confirmOrder}
-                    className="bg-green-600 text-white hover:bg-green-700"
+                    className="main-bg main-text"
                 >
                     Confirm Order
                 </Button>

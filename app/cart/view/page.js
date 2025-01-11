@@ -29,7 +29,7 @@ const OrderSummary = async ({ searchParams }) => {
 
 
     return (
-        <div className="flex flex-col items-center h-screen bg-gray-100">
+        <div className=" h-[520px] overflow-scroll flex flex-col items-center bg-gray-100 md:px-0 px-2">
             <SaveImage orderItems={orderItems} waitingTime={waitingTime} totalPrice={totalPrice} />
         </div>
     );

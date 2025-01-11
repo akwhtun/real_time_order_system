@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Button } from "@/components/ui/button";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,14 +34,28 @@ export default function RootLayout({ children }) {
         <div className="flex flex-col min-h-screen">
           {/* Header */}
           <Header />
+          <div className=" flex-grow w-full justify-end mx-auto p-4 grid  grid-cols-12 gap-4">
+            {/* Sidebar */}
+            <aside className="md:block hidden col-span-3 bg-gray-100 p-4 rounded-lg shadow-md">
+              <nav className="space-y-4 flex flex-col  items-center mt-7">
+                <Button asChild size="lg" className="text-lg w-full main-bg main-text">
+                  <Link href={`/cart/history`}>Order History</Link>
+                </Button>
 
 
-          <div className="flex flex-grow w-full justify-end  p-4 ">
+                <Button asChild size="lg" className="text-lg w-full main-bg main-text">
+                  <Link href="/about">About</Link>
+                </Button>
+                <Button asChild size="lg" className="text-lg w-full main-bg main-text">
+                  <Link href="/help">Help</Link>
+                </Button>
+              </nav>
+            </aside>
+
             {/* Main Content */}
-            <main className="md:w-4/6   w-full main-bg2 rounded-lg shadow-md">
+            <main className="md:col-span-9 col-span-12 w-full bg-white p-4 rounded-lg shadow-md">
               {children}
             </main>
-
           </div>
 
           {/* Footer */}

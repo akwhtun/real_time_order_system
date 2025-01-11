@@ -5,39 +5,41 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+export const foodItems = [
+    {
+        id: 1,
+        name: "Margherita Pizza",
+        description: "Classic cheese pizza with a crispy crust and tomato sauce.",
+        price: "2000",
+        image: "/image/pizza.jpg",
+    },
+    {
+        id: 2,
+        name: "Caesar Salad",
+        description: "Fresh lettuce, Parmesan cheese, croutons, and Caesar dressing.",
+        price: "5000",
+        image: "/image/cake.webp",
+    },
+    {
+        id: 3,
+        name: "Spaghetti Bolognese",
+        description: "Italian pasta served with a rich meat sauce.",
+        price: "12000",
+        image: "/image/pasta.jpg",
+    },
+    {
+        id: 4,
+        name: "Chocolate Cake",
+        description: "Decadent chocolate cake topped with creamy chocolate frosting.",
+        price: "5000",
+        image: "/image/burger.jpg",
+    },
+];
+
 const FoodItems = () => {
     const [cartItems, setCartItems] = useState([])
 
-    const foodItems = [
-        {
-            id: 1,
-            name: "Margherita Pizza",
-            description: "Classic cheese pizza with a crispy crust and tomato sauce.",
-            price: "9.99",
-            image: "https://via.placeholder.com/300x200?text=Pizza",
-        },
-        {
-            id: 2,
-            name: "Caesar Salad",
-            description: "Fresh lettuce, Parmesan cheese, croutons, and Caesar dressing.",
-            price: "7.49",
-            image: "https://via.placeholder.com/300x200?text=Salad",
-        },
-        {
-            id: 3,
-            name: "Spaghetti Bolognese",
-            description: "Italian pasta served with a rich meat sauce.",
-            price: "12.99",
-            image: "https://via.placeholder.com/300x200?text=Pasta",
-        },
-        {
-            id: 4,
-            name: "Chocolate Cake",
-            description: "Decadent chocolate cake topped with creamy chocolate frosting.",
-            price: "5.99",
-            image: "https://via.placeholder.com/300x200?text=Cake",
-        },
-    ];
+
 
     const updateCartItems = () => {
         const localItem = JSON.parse(localStorage.getItem("food-in-cart")) || [];
@@ -89,7 +91,7 @@ const FoodItems = () => {
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold text-center mb-8">Our Delicious Menu</h1>
+            <h1 className="text-3xl font-bold text-center mb-8 main-text2">Our Delicious Menu</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {foodItems.map((item) => (
                     <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
@@ -104,11 +106,11 @@ const FoodItems = () => {
                                 {item.description.slice(0, 40)}...
                             </CardDescription>
                             <div className="flex items-center justify-between mt-4">
-                                <span className="text-lg font-bold text-green-600">{item.price}</span>
+                                <span className="text-lg font-bold">{item.price} MMK</span>
                                 <Button onClick={() => handleAddItem(item)}>Add to Cart</Button>
                             </div>
-                            <Link href="/">
-                                <button className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                            <Link href={`/food/${item.id}`}>
+                                <button className="mt-4 w-full text-white py-2 px-4 rounded-lg main-bg2 border-gray-700 border-2 main-text2 transition-colors">
                                     More Details
                                 </button>
                             </Link>

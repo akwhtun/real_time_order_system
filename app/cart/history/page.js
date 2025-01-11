@@ -79,39 +79,47 @@ const OrderHistoryPage = () => {
 
     return (
 
-        <div className="max-w-4xl mx-auto p-4">
-            <h1 className="text-2xl font-bold text-violet-600 mb-4 text-center">Order History</h1>
+        <div className="h-[520px] overflow-scroll max-w-4xl mx-auto p-4">
+            <h1 className="text-2xl font-bold main-text2 mb-4 text-center">Order History</h1>
             {orderHistory.length === 0 ? (
                 <p className="text-gray-500 text-center">You have no orders yet.</p>
             ) : (
-                <div className="space-y-6">
+                <div className="space-y-6 main-text">
                     {orderHistory.map((order) => (
                         <div
                             key={order.orderCode}
-                            className="p-4 border border-gray-300 rounded-lg shadow hover:shadow-md transition"
+                            className={`p-4 border border-gray-300 rounded-lg shadow hover:shadow-md transition  ${order.status === "completed"
+                                ? "text-green-100 bg-green-400"
+                                : order.status === "pending"
+                                    ? "text-yellow-100 bg-yellow-400"
+                                    : "text-red-100 bg-red-400"
+                                }`}
                         >
-                            <div className="flex justify-between items-center mb-2">
-                                <h2 className="font-bold text-lg">Order #{order.orderCode}</h2>
+                            <div className="flex text-white justify-between items-center mb-2">
+                                <h2 className="font-bold text-lg">Order Code : {order.orderCode}</h2>
                                 <span
                                     className={`px-3 py-1 rounded-full text-sm ${order.status === "completed"
                                         ? "bg-green-100 text-green-600"
-                                        : "bg-yellow-100 text-yellow-600"
+                                        : order.status === "pending"
+                                            ? "bg-yellow-100 text-yellow-600"
+                                            : "bg-red-100 text-red-600"
                                         }`}
                                 >
                                     {order.status}
                                 </span>
+
                             </div>
                             <p className="text-gray-600 mb-2">
-                                <strong>Total Price:</strong> {order.totalFinalPrice} MMK
+                                <strong>Total Price:</strong> <strong>{order.totalFinalPrice} MMK</strong>
                             </p>
 
                             <div className="flex justify-between items-center mb-2">
                                 <p className="text-gray-600 mb-2">
-                                    <strong>Waiting Time:</strong> {order.waitingTime} mins
+                                    <strong>Waiting Time:</strong> <strong>{order.waitingTime} mins</strong>
                                 </p>
                                 <Link href={`/cart/view?orderCode=${order.orderCode}&totalPrice=${order.totalFinalPrice}&waitingTime=${order.waitingTime}`}
                                     className={`px-3 py-1 rounded-full text-sm 
-                                       bg-violet-100 text-yellow-600"
+                                    main-bg2 main-text2
                                     }`}
                                 >
                                     Check Item
