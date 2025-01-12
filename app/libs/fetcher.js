@@ -1,4 +1,3 @@
-const BASE_URL = "http://localhost:3000";
 
 export async function postUserData({ name, phone }) {
     try {
@@ -52,7 +51,7 @@ export async function postOrderData(foodItems, userData) {
 export async function fetchOrderHistory(userId) {
     try {
 
-        const res = await fetch(`${BASE_URL}/api/orders/history/${userId}`, {
+        const res = await fetch(`/api/orders/history/${userId}`, {
             method: "GET",
         });
 
@@ -71,13 +70,13 @@ export async function fetchOrderHistory(userId) {
 export async function fetchOrderItem(orderCode) {
 
     try {
-        const res = await fetch(`${BASE_URL}/api/orders/items/${orderCode}`, {
+        const res = await fetch(`/api/orders/items/${orderCode}`, {
             method: "GET"
         })
 
         if (!res.ok) {
             const errorData = await res.json()
-            throw new Error(errorData.error || "Failed to fetch order history");
+            throw new Error(errorData.error || "Failed to fetch order item history");
         }
         return await res.json()
 

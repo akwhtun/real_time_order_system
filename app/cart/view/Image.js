@@ -31,8 +31,6 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
 
 
 
-
-
     return (
         <>
             <div

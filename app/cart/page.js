@@ -1,9 +1,13 @@
-"use client";
+"use client"
+import { useState, useEffect } from 'react'
+import { fetchOrderControl } from '../admin/libs/fetcher'
+import Cart from './Cart'
+import OrderDisabled from './OrderDisabled'
+export default function page() {
+    const [isOrderOpen, setIsOrderOpen] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-export default function ShoppingCart() {
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
@@ -11,133 +15,79 @@ export default function ShoppingCart() {
         setCartItems(localItem)
     }, [])
 
-    let updatedCart;
+    useEffect(() => {
+        async function fetch() {
+            try {
+                setLoading(true)
+                const data = await fetchOrderControl()
 
-    const increaseQuantity = (id) => {
-        updatedCart = cartItems.map((item) =>
-            item.id === id ? { ...item, count: item.count < 5 ? item.count + 1 : item.count } : item
+                if (data.error) {
+                    setError(data.error)
+                } else {
+                    setIsOrderOpen(data.orderControl)
+                }
+            } catch (error) {
+                console.error(error)
+                setError(error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetch()
+    }, [])
+
+
+    if (loading) {
+        return (
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+                <div className="flex flex-col items-center space-y-6">
+                    {/* SVG Loader */}
+                    <svg
+                        className="h-16 w-16 animate-spin"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="white"
+                            strokeWidth="4"
+                        />
+                        <path
+                            className="opacity-75"
+                            fill="white"
+                            d="M12 2a10 10 0 0110 10H12z"
+                        />
+                    </svg>
+                    {/* Text */}
+                    <h1 className="text-2xl font-semibold text-white animate-pulse">
+                        Loading, please wait...
+                    </h1>
+                </div>
+            </div>
+
         )
+    }
 
-        setCartItems(updatedCart)
-        localStorage.setItem("food-in-cart", JSON.stringify(updatedCart))
-
-    };
-
-    const decreaseQuantity = (id) => {
-
-        updatedCart = cartItems.map((item) =>
-            item.id === id && item.count > 1
-                ? { ...item, count: item.count - 1 }
-                : item
-        )
-            .filter((item) => item.count > 0) // Remove items with zero quantity
-        setCartItems(updatedCart)
-        localStorage.setItem("food-in-cart", JSON.stringify(updatedCart))
-
-    };
-
-    const removeItem = (id) => {
-        updatedCart = cartItems.filter((item) => item.id !== id);
-        setCartItems(updatedCart)
-        localStorage.setItem("food-in-cart", JSON.stringify(updatedCart))
-
-        const event = new Event("cartUpdate");
-        window.dispatchEvent(event);
-    };
-
-    const totalCost = cartItems.reduce(
-        (total, item) => total + item.price * item.count,
-        0
-    );
-
-    const clearCart = () => {
-        localStorage.removeItem("food-in-cart")
-        setCartItems([])
-        const event = new Event("cartUpdate");
-        window.dispatchEvent(event);
+    if (error) {
+        return (
+            <div className="flex h-screen items-center justify-center bg-red-50">
+                <p className="text-red-600 font-medium">{error}</p>
+            </div>
+        );
     }
 
     return (
-        <div className="container h-[520px] overflow-scroll mx-auto p-4">
-            <h1 className="text-3xl font-bold text-center mb-6">Shopping Cart</h1>
-            {cartItems.length === 0 ? (
-                <div className="flex flex-col items-center ">
-                    <p className=" text-gray-700">Your cart is empty!</p>
-                    <Link href={`/`}>
-                        <button className="mt-4 w-48 text-white py-2 px-4 rounded-lg main-bg2 border-gray-700 border-2 main-text2 transition-colors">
-                            Continue Shopping
-                        </button>
-                    </Link>
-                </div>
+        <div>
+            {isOrderOpen && isOrderOpen?.isOpen ? (
+                <Cart cartItems={cartItems} setCartItems={setCartItems} />
             ) : (
-                <div className="space-y-6">
-                    {cartItems.map((item) => (
-                        <div
-                            key={item.id}
-                            className="flex items-center bg-white shadow-md rounded-lg p-4 space-x-4"
-                        >
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-16 h-16 object-cover rounded-lg"
-                            />
-                            <div className="flex-grow">
-                                <h2 className="text-lg font-bold">{item.name}</h2>
-                                <p className="text-gray-500">Price: {item.price} MMK</p>
-                                <div className="flex items-center mt-2 space-x-2">
-                                    <button
-                                        onClick={() => decreaseQuantity(item.id)}
-                                        className="main-text2 main-bg2  px-2 py-1 rounded border-2 border-gray-700  transition"
-                                    >
-                                        -
-                                    </button>
-                                    <span className="text-lg font-bold">{item.count}</span>
-                                    <button
-                                        onClick={() => increaseQuantity(item.id)}
-                                        className="main-text main-bg  px-2 py-1 rounded  transition"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-gray-700 font-semibold">
-                                    Total: {parseFloat(item.price) * parseInt(item.count)} MMK
-                                </p>
-                                <button
-                                    onClick={() => removeItem(item.id)}
-                                    className="mt-2 text-sm text-red-500 hover:underline"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-
-            {cartItems.length > 0 && (
-                <div className="flex flex-wrap justify-between items-center">
-                    <div className="flex items-center">
-                        <Button onClick={clearCart} className="mt-4 main-text2 main-bg2 border-2 border-gray-700  py-2 px-4 rounded-lg ">
-                            Clear Cart
-                        </Button>
-                        <Link href={`/`}>
-                            <button className="mt-4 mx-4 w-48 py-2 px-4 rounded-lg main-bg main-text transition-colors">
-                                Continue Shopping
-                            </button>
-                        </Link>
-                    </div>
-                    <div className="mt-6 p-4 bg-gray-100 rounded-lg text-right">
-                        <h2 className="text-xl font-bold mb-8">Total Cost: {totalCost} MMK</h2>
-                        <Link href={"/cart/user"} className="mt-10 main-bg main-text py-2 px-4 rounded-lg ">
-                            Proceed to Checkout
-                        </Link>
-                    </div>
-
-
-                </div>
+                <OrderDisabled />
             )}
         </div>
     );
+
 }

@@ -7,9 +7,12 @@ import {
     SelectItem,
     SelectValue,
 } from "@/components/ui/select";
+import { fetchOrderControl } from "../libs/fetcher";
+import { Input } from "@/components/ui/input";
 import { Table, TableRow, TableCell, TableHeader } from "@/components/ui/table";
 import { fetchAllOrders } from "../libs/fetcher";
 import { updateOrderStatus } from "../libs/fetcher";
+import { updateOrderControl } from "../libs/fetcher";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -21,8 +24,28 @@ export default function AdminDashboard() {
     const [orderStatus, setOrderStatus] = useState("")
     const [error, setError] = useState(null)
     const [updateSuccess, setUpdateSuccess] = useState(null);
-
     const [loading, setLoading] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [isOrderOpen, setIsOrderOpen] = useState(null)
+
+    useEffect(() => {
+        async function fetchControl() {
+            try {
+                const data = await fetchOrderControl()
+                if (data.error) {
+                    setError(data.error);
+                } else {
+                    setIsOrderOpen(data.orderControl)
+                }
+            } catch (err) {
+                console.error("Error in fetching order:", err);
+                setError("Failed to load order.")
+            }
+        }
+        fetchControl()
+    }, [])
+    // console.log("hi", isOrderOpen);
+
     useEffect(() => {
         async function fetchOrder() {
             setLoading(true)
@@ -64,7 +87,7 @@ export default function AdminDashboard() {
                 setOrderStatus(newStatus)
                 setUpdateSuccess(data.message)
                 setFilterStatus("all")
-
+                setSearchQuery("")
             }
         } catch (error) {
             console.error("Error in updating order:", error);
@@ -73,6 +96,36 @@ export default function AdminDashboard() {
             setLoading(false)
         }
     };
+
+
+    const handleSearch = (e) => {
+        setFilterStatus("all");
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+        setFilteredOrders(
+            orders.filter((order) =>
+                order.user.name.toLowerCase().includes(query)
+            )
+        );
+    };
+
+    const handleOrderControl = async () => {
+        try {
+            setLoading(true)
+            const data = await updateOrderControl(isOrderOpen.id, !isOrderOpen.isOpen)
+            if (data.error) {
+                setError(data.error)
+            } else {
+                setIsOrderOpen(data.orderControl)
+            }
+        } catch (error) {
+            console.error("Error in updating order:", error);
+            setError("Failed to update order.")
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     if (loading) {
         return (
@@ -111,7 +164,19 @@ export default function AdminDashboard() {
 
     return (
         <div className="p-6 space-y-6">
-            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+            <div className="flex justify-between items-center ">
+                <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+
+                {isOrderOpen ? (<button
+                    className={`px-4 py-2 text-white font-medium rounded-md ${isOrderOpen.isOpen ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"
+                        }`}
+                    onClick={handleOrderControl}
+                >
+                    {isOrderOpen.isOpen ? "Turn Orders Off" : "Turn Orders On"}
+                </button>) : (<></>)}
+
+            </div>
+
             {error && (
                 <p className="text-red-500 text-sm mt-1">{error}</p>
             )}
@@ -119,7 +184,7 @@ export default function AdminDashboard() {
                 <p className="text-green-500 text-sm mt-1">{updateSuccess}</p>
             )}
             {/* Filter by Status */}
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex flex-wrap justify-between items-center gap-4">
                 <Select onValueChange={(value) => handleFilterChange(value)} value={filterStatus}>
                     <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Filter by Status" />
@@ -131,6 +196,14 @@ export default function AdminDashboard() {
                         <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
                 </Select>
+                {/* Search Bar */}
+                <Input
+                    type="text"
+                    placeholder="Search order by name"
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e)}
+                    className="w-full max-w-md"
+                />
                 <p>Total Order :{filteredOrders.length}</p>
             </div>
 

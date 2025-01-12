@@ -16,7 +16,6 @@ export async function GET(req, { params }) {
             }
         })
 
-        console.log("o r i", orderItems);
 
         if (orderItems && orderItems.length > 0) {
 

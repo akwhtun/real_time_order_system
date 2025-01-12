@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import { FaHistory, FaInfoCircle, FaQuestionCircle } from "react-icons/fa";
 export default function SideBar({ isOpen }) {
 
     return (
@@ -11,17 +11,33 @@ export default function SideBar({ isOpen }) {
             <Link href="/">
                 <p className="text-2xl font-bold mb-3 mt-3 text-center">Food Order App</p>
             </Link>
-            <nav className="space-y-4 flex flex-col mt-16">
-
-                <Button asChild size="lg" className="text-lg">
-                    <Link href={`/cart/history`}>Order History</Link>
+            <nav className="space-y-4 flex flex-col items-center mt-7">
+                <Button asChild size="lg" className="text-lg w-full flex  items-center gap-3 bg-black main-text">
+                    <Link href="/cart/history">
+                        <>
+                            <FaHistory size={20} />
+                            Order History
+                        </>
+                    </Link>
                 </Button>
 
-
-                <Button asChild size="lg" className="text-lg">
-                    <Link href="/settings">About</Link>
+                <Button asChild size="lg" className="text-lg w-full flex items-center gap-3 bg-black main-text">
+                    <Link href="/about">
+                        <>
+                            <FaInfoCircle size={20} />
+                            About
+                        </>
+                    </Link>
                 </Button>
 
+                <Button asChild size="lg" className="text-lg w-full flex items-center gap-3 bg-black main-text">
+                    <Link href="/help">
+                        <>
+                            <FaQuestionCircle size={20} />
+                            Help
+                        </>
+                    </Link>
+                </Button>
             </nav>
         </aside>
     );

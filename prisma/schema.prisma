@@ -39,3 +39,8 @@ model Order {
   status          String   @default("Pending") // Pending, Preparing, Ready, Delivered
   createdAt       DateTime @default(now())
 }
+
+model OrderControl {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  isOpen Boolean
+}

@@ -77,3 +77,46 @@ export async function fetchFoodOrder(orderCode) {
         return { error: error.message || "An unknown error occurred" };
     }
 }
+
+export async function fetchOrderControl() {
+    try {
+        const res = await fetch("/api/orderControl", {
+            method: "GET"
+        })
+
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.error || "Fail")
+        }
+        return await res.json()
+    } catch (error) {
+        console.error("Error fetching order data:", error);
+        return { error: error.message || "An unknown error occurred" };
+    }
+}
+
+
+export async function updateOrderControl(id, isOpen) {
+
+    try {
+        const res = await fetch(`/api/orderControl/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                isOpen: isOpen
+            }
+            )
+        })
+
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.error || "Fail")
+        }
+        return await res.json()
+    } catch (error) {
+        console.error("Error updating order data:", error);
+        return { error: error.message || "An unknown error occurred" };
+    }
+}
