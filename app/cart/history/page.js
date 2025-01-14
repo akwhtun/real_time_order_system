@@ -1,6 +1,7 @@
 "use client"
 import { fetchOrderHistory } from "@/app/libs/fetcher";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 const OrderHistoryPage = () => {
 
@@ -42,7 +43,7 @@ const OrderHistoryPage = () => {
         return <p className="text-gray-500 text-center">You have no orders yet.</p>
     }
     if (loading) {
-        return (<div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+        return (<div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
             <div className="flex flex-col items-center space-y-6">
                 {/* SVG Loader */}
                 <svg
@@ -79,10 +80,13 @@ const OrderHistoryPage = () => {
 
     return (
 
-        <div className="h-[520px] overflow-scroll max-w-4xl mx-auto p-4">
-            <h1 className="text-2xl font-bold main-text2 mb-4 text-center">Order History</h1>
+        <div className="md:h-[520px] md:overflow-scroll max-w-4xl mx-auto md:p-4 p-0">
+            <Button asChild className="mx-auto md:mt-0 mt-3 flex justify-center">
+                <Link href={"/"} className="main-bg main-text w-28 mx-auto">Back...</Link>
+            </Button>
+            <h1 className="text-2xl font-bold main-text2 mb-4 mt-3 text-center">Order History</h1>
             {orderHistory.length === 0 ? (
-                <p className="text-gray-500 text-center">You have no orders yet.</p>
+                <p className="text-gray-500 text-xl text-center">You have no orders yet.</p>
             ) : (
                 <div className="space-y-6 main-text">
                     {orderHistory.map((order) => (

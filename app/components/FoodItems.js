@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/c
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+import { useContext } from "react";
+import { MyContext } from "../AppProvider";
 export const foodItems = [
     {
         id: 1,
@@ -36,10 +37,11 @@ export const foodItems = [
     },
 ];
 
+
 const FoodItems = () => {
     const [cartItems, setCartItems] = useState([])
 
-
+    const { animate, setAnimate } = useContext(MyContext);
 
     const updateCartItems = () => {
         const localItem = JSON.parse(localStorage.getItem("food-in-cart")) || [];
@@ -74,6 +76,9 @@ const FoodItems = () => {
 
 
     const handleAddItem = (food) => {
+        setAnimate(true);
+
+        setTimeout(() => setAnimate(false), 500);
         const existingItem = cartItems.find(item => item.id === food.id);
         let updatedCart;
         if (existingItem) {
@@ -90,7 +95,7 @@ const FoodItems = () => {
 
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto md:p-6 p-3">
             <h1 className="text-3xl font-bold text-center mb-8 main-text2">Our Delicious Menu</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {foodItems.map((item) => (

@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { foodItems } from "@/app/components/FoodItems";
-
+import { useContext } from "react";
+import { MyContext } from "@/app/AppProvider";
 export default function Page({ params }) {
     const router = useRouter();
     const [itemCount, setItemCount] = useState(1);
     const [cartItems, setCartItems] = useState([])
+    const { animate, setAnimate } = useContext(MyContext);
 
     const { id } = React.use(params);
 
@@ -53,6 +55,9 @@ export default function Page({ params }) {
 
 
     const handleAddItem = (food) => {
+        setAnimate(true);
+
+        setTimeout(() => setAnimate(false), 500);
         const existingItem = cartItems.find(item => item.id === food.id);
         let updatedCart;
         if (existingItem) {
@@ -68,7 +73,7 @@ export default function Page({ params }) {
     };
 
     return (
-        <div className="container h-[530px] overflow-scroll mx-auto p-4">
+        <div className="container md:h-[530px] md:overflow-scroll mx-auto p-4">
             <div className="max-w-3xl mx-auto">
                 <img
                     src={food.image}

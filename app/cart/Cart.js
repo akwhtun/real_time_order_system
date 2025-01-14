@@ -51,7 +51,7 @@ export default function Cart({ cartItems, setCartItems }) {
         window.dispatchEvent(event);
     }
     return (
-        <div className="container h-[520px] overflow-scroll mx-auto p-4">
+        <div className="container md:h-[520px] md:overflow-scroll mx-auto md:p-4 p-1">
             <h1 className="text-3xl font-bold text-center mb-6">Shopping Cart</h1>
             {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center ">
@@ -99,7 +99,7 @@ export default function Cart({ cartItems, setCartItems }) {
                                 </p>
                                 <button
                                     onClick={() => removeItem(item.id)}
-                                    className="mt-2 flex text-sm text-red-500 hover:underline"
+                                    className="md:mt-2 mt-4 flex text-sm text-red-500 hover:underline"
                                 >
                                     <FaTrash size={20} />
                                     &nbsp; Remove

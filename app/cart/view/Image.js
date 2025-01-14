@@ -32,13 +32,13 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
 
 
     return (
-        <>
+        <div className='flex flex-col items-center'>
             <div
                 ref={printRef}
-                className="main-bg2 main-text2  shadow-lg mt-5 rounded-lg p-6 w-full max-w-lg "
+                className=" bg-gray-100 main-text2 mb-2 shadow-sm md:mt-2 mt-0 rounded-lg md:p-6 p-3  max-w-lg w-full mx-auto"
             >
                 <div className="text-center mb-2">
-                    <h1 className="text-2xl font-bold text-gray-800">Payment Voucher</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Foodify 2</h1>
                     <p className="text-gray-600 mt-3">Order Code : <strong>{orderCode}</strong></p>
                 </div>
                 <div className="mt-4">
@@ -89,7 +89,7 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
                 <div className="mt-3 flex border-t justify-center">
                     <div className="p-4 mt-4 bg-gray-100 rounded-lg">
                         <img
-                            src={orderItems[0].imageName} // Replace with the QR code image URL
+                            src="/image/qr.jpg" // Replace with the QR code image URL
                             alt="Payment QR Code"
                             className="w-32 h-32"
                         />
@@ -105,17 +105,12 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
 
             <Button
                 onClick={handleSaveAsImage}
-                className="mt-6 main-bg main-text px-4 py-2 rounded shadow-lg "
+                className="md:mt-3 mt-5 mb-2 mx-auto main-bg main-text px-4 py-2 rounded shadow-lg "
             >
                 Save as Photo
             </Button>
-            {/* <Button
-                    asChild
-                    className="mt-6 main-bg main-text px-4 py-2 rounded shadow-lg "
-                >
-                    <Link href="/"> Back Home</Link>
-                </Button> */}
-        </>
+
+        </div>
 
 
 

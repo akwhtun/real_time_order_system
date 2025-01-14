@@ -78,7 +78,7 @@ const UserInfo = () => {
 
     if (loading) {
         return (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+            <div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
                 <div className="flex flex-col items-center space-y-6">
                     {/* SVG Loader */}
                     <svg

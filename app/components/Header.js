@@ -4,11 +4,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
 import Hamburgermenu from "./Hamburgermenu";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { MyContext } from "../AppProvider";
 export default function Header() {
     const [items, setItems] = useState([]);
 
+    const { animate, setAnimate } = useContext(MyContext)
     // Function to fetch items from localStorage
     const getItems = () => {
         const localItems = JSON.parse(localStorage.getItem("food-in-cart")) || [];
@@ -41,17 +42,21 @@ export default function Header() {
     }, []);
 
     return (
-        <header className="main-bg main-text p-4 shadow-md">
+        <header className="main-bg main-text p-4  fixed top-0 left-0 w-full shadow-md">
             <div className="container mx-auto flex flex-wrap justify-between items-center">
-                <Link href="/">
-                    <p className="text-2xl font-bold">Food Order App</p>
+                <Link href="/" className="cursor-pointer">
+                    <p className="text-3xl  logo-font md:ms-12 font-semibold">Foodify 2</p>
                 </Link>
                 <div className="flex gap-4 mt-2">
-                    <nav className="flex flex-wrap space-x-4 me-4 sm:mt-0">
+                    <nav className="flex flex-wrap space-x-4 me-4 sm:mt-0 ms-10">
                         <Button asChild>
                             <Link href="/cart">
-                                <div className="relative inline-block">
-                                    <FaShoppingCart className="text-2xl text-gray-700 hover:text-violet-600 cursor-pointer" />
+                                <div
+                                    className={`relative inline-block 
+                                        ${animate ? "animate-popAndSpin" : ""}`}
+                                >
+
+                                    <FaShoppingCart className="text-2xl text-white  cursor-pointer" />
 
                                     {items.length > 0 ? (
                                         <span

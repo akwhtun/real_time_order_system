@@ -2,7 +2,7 @@
 
 const OrderSummary = ({ cartItems, totalCost }) => {
     return (
-        <div className="bg-white p-4 border rounded-md shadow-md">
+        <div className="bg-white md:p-4 p-2 border rounded-md shadow-md">
             <h3 className="text-xl font-semibold">Your Order</h3>
             <div className="mt-4">
                 {cartItems.map((item) => (

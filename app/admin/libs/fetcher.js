@@ -17,7 +17,6 @@ export async function fetchAllOrders() {
         if (!res.ok) {
             const errorData = await res.json()
             throw new Error(errorData.error || "Failed to fetch order");
-
         }
 
         return await res.json()

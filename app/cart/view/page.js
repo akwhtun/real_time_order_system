@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchOrderItem } from "@/app/libs/fetcher";
 import SaveImage from "./Image";
+import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 const OrderSummary = () => {
     const searchParams = useSearchParams();
@@ -61,7 +62,7 @@ const OrderSummary = () => {
 
     if (isLoading) {
         return (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+            <div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
                 <div className="flex flex-col items-center space-y-6">
                     <svg
                         className="h-16 w-16 animate-spin"
@@ -92,7 +93,10 @@ const OrderSummary = () => {
     }
 
     return (
-        <div className="h-[520px] overflow-scroll flex flex-col items-center bg-gray-100 md:px-0 px-2">
+        <div className="md:h-[520px] md:overflow-scroll">
+            <Button asChild onClick={() => history.back()} className="cursor-pointer mx-auto md:my-1 my-4 flex justify-center">
+                <p className="main-bg main-text w-28 mx-auto">Back...</p>
+            </Button>
             {orderItems.length > 0 && (
                 <SaveImage
                     orderItems={orderItems}

@@ -28,7 +28,7 @@ export async function GET() {
                     message: "No order data found",
                     orderData: [],
                 },
-                { status: 404 }
+                { status: 200 }
             );
         }
     } catch (error) {

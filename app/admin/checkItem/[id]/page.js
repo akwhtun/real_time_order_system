@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { fetchFoodOrder, updateOrderStatus } from "../../libs/fetcher";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import Link from "next/link";
 import {
     Select,
@@ -92,10 +93,8 @@ const UserOrdersPage = ({ params, searchParams }) => {
             setIsLoading(false);
         }
     };
-
-
     if (isLoading) {
-        return (<div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+        return (<div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
             <div className="flex flex-col items-center space-y-6">
                 {/* SVG Loader */}
                 <svg
@@ -148,9 +147,12 @@ const UserOrdersPage = ({ params, searchParams }) => {
                 </div>
 
                 {updateSuccess && (
-                    <p className="text-green-500 text-sm font-medium mb-4">
-                        {updateSuccess}
-                    </p>
+                    <Alert className="bg-black text-white mb-1 z-0">
+                        <AlertTitle>Success</AlertTitle>
+                        <AlertDescription>
+                            {updateSuccess}
+                        </AlertDescription>
+                    </Alert>
                 )}
 
                 <div className="space-y-4">

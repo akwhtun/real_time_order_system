@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client"
 import { NextResponse } from "next/server"
-
 // let foodItems = [
 //     { id: '1', name: 'burger', price: '2000', imageName: 'burger.jpg', count: 1, totalPrice: '2000' },
 //     { id: '2', name: 'milk', price: '3000', imageName: 'milk.jpg', quantity: 2, totalPrice: '6000' },
@@ -40,7 +39,7 @@ export async function POST(req) {
             });
 
             totalFinalPrice += totalPrice;
-            waitingTime += count * 5;
+            waitingTime += count * 10;
         }
 
 
@@ -58,17 +57,14 @@ export async function POST(req) {
 
 
 
-
         if (itemCount && order) {
+
             return NextResponse.json(
                 { message: "Order created successfully" },
                 { status: 201 }
             );
 
         }
-        // console.log(data);
-
-
     } catch (error) {
         console.error("Error creating order:", error);
         return NextResponse.json(

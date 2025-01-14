@@ -7,6 +7,8 @@ import {
     SelectItem,
     SelectValue,
 } from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
 import { fetchOrderControl } from "../libs/fetcher";
 import { Input } from "@/components/ui/input";
 import { Table, TableRow, TableCell, TableHeader } from "@/components/ui/table";
@@ -14,9 +16,12 @@ import { fetchAllOrders } from "../libs/fetcher";
 import { updateOrderStatus } from "../libs/fetcher";
 import { updateOrderControl } from "../libs/fetcher";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AdminDashboard() {
+
+    const router = useRouter()
 
     const [orders, setOrders] = useState([])
     const [filteredOrders, setFilteredOrders] = useState([]);
@@ -29,6 +34,11 @@ export default function AdminDashboard() {
     const [isOrderOpen, setIsOrderOpen] = useState(null)
 
     useEffect(() => {
+
+        const admin = JSON.parse(localStorage.getItem("admin-data"))
+        if (!admin) {
+            router.push("/admin/login")
+        }
         async function fetchControl() {
             try {
                 const data = await fetchOrderControl()
@@ -44,7 +54,6 @@ export default function AdminDashboard() {
         }
         fetchControl()
     }, [])
-    // console.log("hi", isOrderOpen);
 
     useEffect(() => {
         async function fetchOrder() {
@@ -127,9 +136,17 @@ export default function AdminDashboard() {
     }
 
 
+    const handleLogout = () => {
+
+        localStorage.removeItem("admin-data");
+
+        router.push("/admin/login");
+    };
+
+
     if (loading) {
         return (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+            <div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
                 <div className="flex flex-col items-center space-y-6">
                     {/* SVG Loader */}
                     <svg
@@ -167,6 +184,12 @@ export default function AdminDashboard() {
             <div className="flex justify-between items-center ">
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
 
+                <button
+                    onClick={handleLogout}
+                    className="main-bg text-white px-4 py-2 rounded  focus:outline-none focus:ring-2 "
+                >
+                    Logout
+                </button>
                 {isOrderOpen ? (<button
                     className={`px-4 py-2 text-white font-medium rounded-md ${isOrderOpen.isOpen ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"
                         }`}
@@ -180,11 +203,18 @@ export default function AdminDashboard() {
             {error && (
                 <p className="text-red-500 text-sm mt-1">{error}</p>
             )}
+
             {updateSuccess && (
-                <p className="text-green-500 text-sm mt-1">{updateSuccess}</p>
+                <Alert className="bg-black text-white">
+                    <AlertTitle>Success</AlertTitle>
+                    <AlertDescription>
+                        {updateSuccess}
+                    </AlertDescription>
+                </Alert>
             )}
+
             {/* Filter by Status */}
-            <div className="flex flex-wrap justify-between items-center gap-4">
+            <div className="flex flex-wrap justify-between items-center gap-4 mt-2">
                 <Select onValueChange={(value) => handleFilterChange(value)} value={filterStatus}>
                     <SelectTrigger className="w-[200px]">
                         <SelectValue placeholder="Filter by Status" />

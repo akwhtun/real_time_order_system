@@ -6,7 +6,7 @@ export default function Hamburgermenu() {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
-            <SideBar isOpen={isOpen} />
+            <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
             <button
                 className="relative flex flex-col items-center justify-center w-10 h-10 space-y-1.5 md:hidden"
                 onClick={() => setIsOpen(!isOpen)} // Toggle isOpen on button click
