@@ -9,31 +9,31 @@ import { MyContext } from "../AppProvider";
 export const foodItems = [
     {
         id: 1,
-        name: "Margherita Pizza",
-        description: "Classic cheese pizza with a crispy crust and tomato sauce.",
-        price: "2000",
-        image: "/image/pizza.jpg",
+        name: "စပိုက်ဆီ ခေါက်ဆွဲ",
+        description: "စပိုက်ဆီ ခေါက်ဆွဲသား + စပိုက်ဆီ အနှစ်ဘူး + ခါကြက်ဥ + မုန်ညင်းရွက် + နန်းရွက်",
+        price: "3000",
+        image: "/image/spicy-noodle.jpg",
     },
     {
         id: 2,
-        name: "Caesar Salad",
-        description: "Fresh lettuce, Parmesan cheese, croutons, and Caesar dressing.",
-        price: "5000",
-        image: "/image/cake.webp",
+        name: "ဒိန်ချဥ် စစ်စစ်",
+        description: "ဒိန်ချဥ် ပါသည်",
+        price: "2500",
+        image: "/image/yogurt.jpg",
     },
     {
         id: 3,
-        name: "Spaghetti Bolognese",
-        description: "Italian pasta served with a rich meat sauce.",
-        price: "12000",
-        image: "/image/pasta.jpg",
+        name: "စတော်ဘယ်ရီ ဒိန်ချဥ်",
+        description: " စတော်ဘယ်ရီ + ဒိန်ချဥ်စစ်စစ် + နို့ဆီနို့စိမ်း + ရေ",
+        price: "3500",
+        image: "/image/Strawberry-Yogurt.webp",
     },
     {
         id: 4,
-        name: "Chocolate Cake",
-        description: "Decadent chocolate cake topped with creamy chocolate frosting.",
-        price: "5000",
-        image: "/image/burger.jpg",
+        name: "အိုဗာကွေး",
+        description: "အီကြာကွေး + နွားနို့စစ်စစ် + အိုဗာတင်း (အဖြူ + အနီ)",
+        price: "1500",
+        image: "/image/over-kway.jpg",
     },
 ];
 
@@ -97,7 +97,7 @@ const FoodItems = () => {
     return (
         <div className="container mx-auto md:p-6 p-3 ">
             <h1 className="text-3xl font-bold text-center mb-8 main-text2">Our Delicious Menu</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 menu-font">
                 {foodItems.map((item) => (
                     <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
                         <img
@@ -107,15 +107,15 @@ const FoodItems = () => {
                         />
                         <CardContent className="p-4">
                             <CardTitle className="text-lg font-bold">{item.name}</CardTitle>
-                            <CardDescription className="text-sm text-gray-600 mb-2">
+                            <CardDescription className="text-sm text-gray-600 my-2">
                                 {item.description.slice(0, 40)}...
                             </CardDescription>
                             <div className="flex items-center justify-between mt-4">
                                 <span className="text-lg font-bold">{item.price} MMK</span>
-                                <Button onClick={() => handleAddItem(item)}>Add to Cart</Button>
+                                <Button className="pb-0" onClick={() => handleAddItem(item)}>Add to Cart</Button>
                             </div>
                             <Link href={`/food/${item.id}`}>
-                                <button className="mt-4 w-full text-white py-2 px-4 rounded-lg main-bg2 border-gray-700 border-2 main-text2 transition-colors">
+                                <button className="mt-4 w-full text-white pt-2 px-4 rounded-lg main-bg2 border-gray-700 border-2 main-text2 transition-colors">
                                     More Details
                                 </button>
                             </Link>

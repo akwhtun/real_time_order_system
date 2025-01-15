@@ -43,7 +43,7 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
                 </div>
                 <div className="mt-4 order-font">
 
-                    <h2 className="text-lg font-semibold text-gray-700 mb-2">Ordered Items:</h2>
+                    <h2 className="text-lg font-semibold text-gray-700 mb-2">Ordered Foods:</h2>
                     <ul className="space-y-4">
                         {orderItems.map((item, index) => (
                             <li
@@ -97,7 +97,7 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
                     </div>
                 </div>
 
-                <div className="mt-8 text-center logo-font">
+                <div className="mt-8 mb-2 text-center logo-font">
                     <p className="text-gray-800 text-lg font-semibold">Thanks for your attention!</p>
                     <p className="text-sm text-gray-600">We appreciate your support.</p>
                 </div>

@@ -74,13 +74,13 @@ export default function Page({ params }) {
 
     return (
         <div className="container md:h-[530px] md:overflow-scroll mx-auto p-4">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-3xl mx-auto menu-font">
                 <img
                     src={food.image}
                     alt={food.name}
                     className="w-full h-64 object-cover rounded-lg"
                 />
-                <h1 className="mt-4 text-3xl font-bold">{food.name}</h1>
+                <h1 className="mt-6 text-3xl font-bold">{food.name}</h1>
                 <p className="mt-2 text-gray-700">{food.description}</p>
                 <p className="mt-4 text-lg font-semibold main-text2">{food.price} MMK</p>
                 <h2 className="mt-6 text-2xl font-bold">Ingredients</h2>

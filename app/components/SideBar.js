@@ -10,7 +10,7 @@ export default function SideBar({ isOpen, setIsOpen }) {
                 className={` md:col-span-3 main-bg p-4 rounded-lg shadow-md  md:w-2/6 w-4/5 h-full  `}
             >
                 <Link href="/" className="cursor-pointer flex justify-center mb-12">
-                    <p className="text-3xl mx-auto  logo-font md:ms-12 font-semibold">Foodify 2</p>
+                    <p className="md:text-3xl text-2xl mx-auto  logo-font md:ms-12 font-semibold">Foodify 2</p>
                 </Link>
                 <nav className="space-y-4 flex flex-col items-center mt-7">
                     <Button asChild size="lg" className="text-lg w-full flex  items-center gap-3 bg-black main-text">
