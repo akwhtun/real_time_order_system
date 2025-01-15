@@ -11,7 +11,7 @@ const About = () => {
 
                 {/* Main Paragraph Section */}
                 <p className="text-xl leading-relaxed font-medium mb-6">
-                    Welcome to <span className="font-semibold ">Foodify2</span>, a simple and easy way to order food. We created this app with university students in mind, specifically for students at <span className="font-semibold ">Computer University - Mandalay</span>, to make our university welcome day a memorable occasion.
+                    Welcome to <span className="font-extrabold ">Foodify2</span>, a simple and easy way to order food. We created this app with university students in mind, especially for students at <span className="font-extrabold ">Computer University - Mandalay</span>, to make our university welcome day a memorable occasion.
                 </p>
 
                 <p className="text-xl leading-relaxed font-medium mb-6">
@@ -20,7 +20,7 @@ const About = () => {
 
                 {/* Closing Paragraph */}
                 <p className="text-xl leading-relaxed font-medium mb-12">
-                    Thank you for choosing <span className="font-semibold ">Foodify2</span>. We’re here to make your day more delicious!
+                    Thank you for choosing <span className="font-extrabold ">Foodify2</span>. We’re here to make your day more delicious!
                 </p>
 
 

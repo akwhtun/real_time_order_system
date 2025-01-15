@@ -86,3 +86,25 @@ export async function fetchOrderItem(orderCode) {
     }
 }
 
+
+
+
+export async function fetchUser(id) {
+
+    try {
+        const res = await fetch(`/api/users/${id}`, {
+            method: "GET"
+        })
+
+        if (!res.ok) {
+            const errorData = await res.json()
+            throw new Error(errorData.error || "Failed to fetch order item history");
+        }
+        return await res.json()
+
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        return { error: error.message || "An unknown error occurred" }
+    }
+}
+

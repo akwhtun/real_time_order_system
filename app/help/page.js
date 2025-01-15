@@ -9,7 +9,7 @@ const HelpPage = () => {
             <p className="text-lg mb-4">
                 We're here to assist you! If you have any questions or need support, feel free to reach out.
             </p>
-            <div className="bg-white text-gray-900 p-6 rounded-lg shadow-lg">
+            <div className="bg-white text-gray-900 md:p-6 p-5 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
                 <p className="text-lg mb-4">
                     📞 <span className="font-medium">Phone:</span> <a href="tel:+959445741581" className="underline">+95 9445741581</a>

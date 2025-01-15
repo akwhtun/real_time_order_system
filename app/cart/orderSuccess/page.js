@@ -21,7 +21,7 @@ const OrderSuccessful = () => {
 
 
     return (
-        <div className="flex flex-col justify-center items-center w-full h-full bg-gradient-to-br main-bg main-text md:p-0 p-2">
+        <div className="flex flex-col justify-center items-center w-full h-full bg-gradient-to-br mt-2 main-bg main-text md:p-0 p-2">
             {/* Confetti Animation */}
             {showConfetti && (
                 <div className="absolute inset-0 overflow-hidden">

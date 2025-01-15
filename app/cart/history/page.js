@@ -43,7 +43,7 @@ const OrderHistoryPage = () => {
         return <p className="text-gray-500 text-center">You have no orders yet.</p>
     }
     if (loading) {
-        return (<div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+        return (<div className="mt-3 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
             <div className="flex flex-col items-center space-y-6">
                 {/* SVG Loader */}
                 <svg
@@ -121,13 +121,14 @@ const OrderHistoryPage = () => {
                                 <p className="text-gray-600 mb-2">
                                     <strong>Waiting Time:</strong> <strong>{order.waitingTime} mins</strong>
                                 </p>
-                                <Link href={`/cart/view?orderCode=${order.orderCode}&totalPrice=${order.totalFinalPrice}&waitingTime=${order.waitingTime}`}
+                                {order.status === "cancelled" ? ("") : (<Link href={`/cart/view?orderCode=${order.orderCode}&totalPrice=${order.totalFinalPrice}&waitingTime=${order.waitingTime}`}
                                     className={`px-3 py-1 rounded-full text-sm 
                                     main-bg2 main-text2
                                     }`}
                                 >
                                     Check Item
-                                </Link>
+                                </Link>)}
+
                             </div>
                         </div>
                     ))}

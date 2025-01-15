@@ -10,7 +10,7 @@ export default function OrderDisabled() {
             </p>
             <Link href="/">
                 <p className="px-6 py-3 main-bg main-text text-white rounded-lg transition">
-                    Return to Homepage
+                    Back Home
                 </p>
             </Link>
         </div>

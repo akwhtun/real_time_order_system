@@ -78,7 +78,7 @@ export default function RootLayout({ children }) {
               </aside>
 
               {/* Main Content */}
-              <main className="md:col-span-9 col-span-12 w-full bg-white p-4 rounded-lg shadow-md">
+              <main className="md:col-span-9 col-span-12 w-full bg-white md:p-4 p-0 rounded-lg shadow-md">
                 {children}
               </main>
             </div>

@@ -4,31 +4,48 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { postUserData } from "@/app/libs/fetcher";
-
+import { fetchUser } from "@/app/libs/fetcher";
 const UserInfo = () => {
     const [userData, setUserData] = useState({ name: "", phone: "" });
     const [error, setError] = useState({});
     const [addError, setAddError] = useState([])
     const [loading, setLoading] = useState(false)
+    const [existUser, setExistUser] = useState(null)
     const router = useRouter();
 
     useEffect(() => {
-        try {
-            // setLoading(true)
-            const user = JSON.parse(localStorage.getItem("user-data"));
-            const foodItems = JSON.parse(localStorage.getItem("food-in-cart"))
-            if (!foodItems) {
-                router.push("/")
-            }
-            if (user) {
-                router.push("/cart/order")
-            }
-        } catch (error) {
-            setError(error)
-        } finally {
-            setLoading(false)
+        const user = JSON.parse(localStorage.getItem("user-data"));
+        const foodItems = JSON.parse(localStorage.getItem("food-in-cart"))
+        if (!foodItems) {
+            router.push("/")
+            return
         }
+        if (user) {
+            async function checkUser() {
+                try {
+                    setLoading(true)
+                    const data = await fetchUser(user.id)
+                    if (data.error) {
+                        setError(data.error)
+                    } else {
+                        setExistUser(data.user)
+                    }
+                } catch (error) {
+                    setError(error)
+                } finally {
+                    setLoading(false)
+                }
+            }
+            checkUser()
+        }
+
     }, [])
+
+    useEffect(() => {
+        if (existUser) {
+            router.push("/cart/order");
+        }
+    }, [existUser]);
 
     const validateForm = () => {
         let isValid = true;
@@ -78,7 +95,7 @@ const UserInfo = () => {
 
     if (loading) {
         return (
-            <div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+            <div className="mt-3 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
                 <div className="flex flex-col items-center space-y-6">
                     {/* SVG Loader */}
                     <svg

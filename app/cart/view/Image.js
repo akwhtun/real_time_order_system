@@ -38,10 +38,10 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
                 className=" bg-gray-100 main-text2 mb-2 shadow-sm md:mt-2 mt-0 rounded-lg md:p-6 p-3  max-w-lg w-full mx-auto"
             >
                 <div className="text-center mb-2">
-                    <h1 className="text-2xl font-bold text-gray-800">Foodify 2</h1>
-                    <p className="text-gray-600 mt-3">Order Code : <strong>{orderCode}</strong></p>
+                    <h1 className="text-2xl font-bold text-gray-800 logo-font">Foodify 2</h1>
+                    <p className="text-gray-600 mt-3 order-font">Order Code : <strong>{orderCode}</strong></p>
                 </div>
-                <div className="mt-4">
+                <div className="mt-4 order-font">
 
                     <h2 className="text-lg font-semibold text-gray-700 mb-2">Ordered Items:</h2>
                     <ul className="space-y-4">
@@ -73,20 +73,20 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
 
                 </div>
 
-                <div className="mt-3 border-t pt-3">
+                <div className="mt-3 border-t pt-3 order-font">
                     <div className="flex justify-between text-lg font-semibold">
                         <span>Total Amount</span>
                         <span>{totalPrice} MMK</span>
                     </div>
                 </div>
-                <div className="mt-3 border-t pt-3">
+                <div className="mt-3 border-t pt-3 order-font">
                     <div className="flex justify-between text-lg font-semibold">
                         <span>Waiting Time</span>
                         <span>about {waitingTime} mins</span>
                     </div>
                 </div>
 
-                <div className="mt-3 flex border-t justify-center">
+                <div className="mt-3 flex border-t justify-center order-font">
                     <div className="p-4 mt-4 bg-gray-100 rounded-lg">
                         <img
                             src="/image/qr.jpg" // Replace with the QR code image URL
@@ -97,7 +97,7 @@ const SaveImage = ({ orderItems, totalPrice, waitingTime }) => {
                     </div>
                 </div>
 
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center logo-font">
                     <p className="text-gray-800 text-lg font-semibold">Thanks for your attention!</p>
                     <p className="text-sm text-gray-600">We appreciate your support.</p>
                 </div>

@@ -19,7 +19,8 @@ const FoodOrderConfirmPage = () => {
     useEffect(() => {
         // Load user data from localStorage
         const storedUserData = JSON.parse(localStorage.getItem("user-data"));
-        if (!storedUserData) {
+        const storedFood = JSON.parse(localStorage.getItem("food-in-cart"));
+        if (!storedUserData || !storedFood) {
             router.push("/cart/user")
             return
         }
@@ -64,7 +65,7 @@ const FoodOrderConfirmPage = () => {
     }
 
     if (loading) {
-        return (<div className="mt-4 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
+        return (<div className="mt-3 flex h-full w-full items-center justify-center bg-gradient-to-r main-bg">
             <div className="flex flex-col items-center space-y-6">
                 {/* SVG Loader */}
                 <svg

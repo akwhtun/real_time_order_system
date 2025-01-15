@@ -45,7 +45,7 @@ export default function Header() {
         <header className="main-bg main-text p-4  fixed top-0 left-0 w-full shadow-md">
             <div className="container mx-auto flex flex-wrap justify-between items-center">
                 <Link href="/" className="cursor-pointer">
-                    <p className="text-3xl  logo-font md:ms-12 font-semibold">Foodify 2</p>
+                    <p className="text-3xl  logo-font md:ms-12 ms-4 font-semibold">Foodify 2</p>
                 </Link>
                 <div className="flex gap-4 mt-2">
                     <nav className="flex flex-wrap space-x-4 me-4 sm:mt-0 ms-10">

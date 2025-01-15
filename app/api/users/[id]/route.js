@@ -15,28 +15,25 @@ export async function GET(req, { params }) {
             );
         }
 
-        const orderHistory = await prisma.order.findMany({
+        const user = await prisma.user.findFirst({
             where: {
-                userId: id,
-            },
-            orderBy: {
-                createdAt: "desc",
+                id: id,
             },
         });
 
-        if (orderHistory.length > 0) {
+        if (user) {
             return NextResponse.json(
-                { message: "Order history fetched successfully", history: orderHistory },
+                { message: "User exit", user: user },
                 { status: 200 }
             );
         } else {
             return NextResponse.json(
-                { message: "No order history found for this user", history: [] },
+                { message: "No user exit", user: null },
                 { status: 200 }
             );
         }
     } catch (error) {
-        console.error("Error fetching order history:", error);
+        console.error("Error fetching user:", error);
         return NextResponse.json(
             { error: "Internal server error" },
             { status: 500 }

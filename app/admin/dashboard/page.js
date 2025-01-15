@@ -32,6 +32,7 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [isOrderOpen, setIsOrderOpen] = useState(null)
+    const [refreshOrder, setRefreshOrder] = useState(false)
 
     useEffect(() => {
 
@@ -74,7 +75,7 @@ export default function AdminDashboard() {
             }
         }
         fetchOrder()
-    }, [orderStatus])
+    }, [orderStatus, refreshOrder])
 
 
     const handleFilterChange = (status) => {
@@ -181,15 +182,16 @@ export default function AdminDashboard() {
 
     return (
         <div className="p-6 space-y-6">
-            <div className="flex justify-between items-center ">
+            <div className="flex flex-wrap space-y-2 justify-between items-center ">
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
 
                 <button
-                    onClick={handleLogout}
-                    className="main-bg text-white px-4 py-2 rounded  focus:outline-none focus:ring-2 "
+                    onClick={() => setRefreshOrder(pre => !pre)}
+                    className="main-bg2 main-text2 border-2 border-gray-800 px-4 py-2 rounded  focus:outline-none focus:ring-2 "
                 >
-                    Logout
+                    Refresh Order
                 </button>
+
                 {isOrderOpen ? (<button
                     className={`px-4 py-2 text-white font-medium rounded-md ${isOrderOpen.isOpen ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"
                         }`}
@@ -198,6 +200,14 @@ export default function AdminDashboard() {
                     {isOrderOpen.isOpen ? "Turn Orders Off" : "Turn Orders On"}
                 </button>) : (<></>)}
 
+                <button
+                    onClick={handleLogout}
+                    className="main-bg text-white px-4 py-2 rounded  focus:outline-none focus:ring-2 "
+                >
+                    Logout
+                </button>
+
+
             </div>
 
             {error && (
@@ -205,11 +215,16 @@ export default function AdminDashboard() {
             )}
 
             {updateSuccess && (
-                <Alert className="bg-black text-white">
-                    <AlertTitle>Success</AlertTitle>
-                    <AlertDescription>
-                        {updateSuccess}
-                    </AlertDescription>
+                <Alert className="bg-black text-white flex justify-between">
+                    <div>
+                        <AlertTitle>Success</AlertTitle>
+                        <AlertDescription>
+                            {updateSuccess}
+                        </AlertDescription>
+
+                    </div>
+                    <button onClick={() => setUpdateSuccess(null)} className="close-btn text-xl cursor-pointer">X</button>
+
                 </Alert>
             )}
 
