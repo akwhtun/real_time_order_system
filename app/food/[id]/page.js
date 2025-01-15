@@ -87,14 +87,14 @@ export default function Page({ params }) {
                 <div className="flex items-center mt-6 space-x-4">
                     <button
                         onClick={decreaseCount}
-                        className="main-bg2 main-text2 border-2 border-gray-700 px-4 py-2 rounded-lg "
+                        className="main-bg2 main-text2 pb-0 border-2 border-gray-700 px-4 py-2 rounded-lg "
                     >
                         -
                     </button>
                     <span className="text-lg font-bold">{itemCount}</span>
                     <button
                         onClick={increaseCount}
-                        className="main-bg main-text px-4 py-2 rounded-lg "
+                        className="main-bg pb-0 main-text px-4 py-2 rounded-lg "
                     >
                         +
                     </button>
@@ -102,14 +102,14 @@ export default function Page({ params }) {
 
                 <button
                     onClick={() => handleAddItem(food)}
-                    className="mt-6 cursor-pointer py-2 px-4 rounded-lg main-bg main-text"
+                    className="mt-6 cursor-pointer py-2 pb-0 px-4 rounded-lg main-bg main-text"
                 >
                     Add to Order
                 </button>
 
                 <button
                     onClick={() => router.push("/")}
-                    className="mt-6 ml-4 cursor-pointer main-text2 main-bg2 border-2 border-gray-700 py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
+                    className="mt-6 ml-4 pb-0 cursor-pointer main-text2 main-bg2 border-2 border-gray-700 py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors"
                 >
                     Back to Menu
                 </button>
